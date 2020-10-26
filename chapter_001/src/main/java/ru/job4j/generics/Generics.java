@@ -1,4 +1,4 @@
-package ru.job4j.generics;
+/*package ru.job4j.generics;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,9 +7,9 @@ import java.util.List;
 public class Generics {
     public static void main(String[] args) {
         Generics gen = new Generics();
-        List<Animal> first = new ArrayList<>();
-        List<Predator> second = new ArrayList<>();
-        List<Tiger> third = new ArrayList<>();
+        List<Animal> first = new ArrayList();
+        List<Predator> second = new ArrayList();
+        List<Tiger> third = new ArrayList();
         first.add(new Animal());
         second.add(new Predator());
         third.add(new Tiger());
@@ -50,3 +50,5 @@ public class Generics {
         }
     }
 }
+
+ */
