@@ -18,47 +18,66 @@ public class SimpleArrayTest {
 
     @Before
     public void setUp() {
-        listModel = new Integer[] {1,2,3,4,5,6,7,8,null};
-        sA = new SimpleArray<>(listModel);
+       sA = new SimpleArray<>(5);
     }
 
-    @Test
-   public void whenAddModel(){
+    @Test (expected = IndexOutOfBoundsException.class)
+   public void whenOutOfBounds(){
      sA.add(3);
-     Integer[] expected = {1,2,3,4,5,6,7,8,3};
-     assertThat(listModel, is(expected));
+     sA.add(2);
+     sA.add(3);
+     sA.add(2);
+     sA.add(3);
+     sA.add(2);
+     }
+
+     @Test
+     public void wheAddModel() {
+        sA.add(1);
+        sA.add(2);
+        sA.add(3);
+        sA.add(4);
+        sA.add(5);
+        assertThat(sA.get(1), is(2));
      }
 
     @Test
     public void whenSetModel() {
-    sA.set(1, 3);
-    Integer[] expected = {1,3,3,4,5,6,7,8,null};
-        assertThat(listModel, is(expected));
+        sA = new SimpleArray<>(3);
+        sA.add(1);
+        sA.add(2);
+        sA.add(3);
+        sA.set(1, 3);
+        assertThat(sA.get(1), is(3));
     }
 
-    @Test
+    @Test (expected = IndexOutOfBoundsException.class )
     public void whenDeleteModel() {
-        sA.remove(3);
-        Integer[] expected = {1,2,3,5,6,7,8, null, null};
-        assertThat(listModel, is (expected));
+        sA = new SimpleArray<>(3);
+        sA.add(1);
+        sA.add(2);
+        sA.add(3);
+        sA.remove(2);
+        sA.get(2);
     }
 
     @Test
     public void whenWeGetModel() {
-        assertThat(sA.get(1), is (2));
+        sA.add(2);
+        sA.add(1);
+        assertThat(sA.get(0), is (2));
     }
 
     @Test
     public void whenIteratorHasNext() {
-        Iterator<Integer> it = new SimpleArrayIterator<>(listModel);
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
+        sA.add(2);
+        sA.add(1);
+        assertThat(sA.iterator().hasNext(), is(true));
+        assertThat(sA.iterator().hasNext(), is(true));
     }
 
     @Test
     public void whenIteratorHasntNext() {
-        Integer [] listModel = {};
-        Iterator<Integer> it = new SimpleArrayIterator<>(listModel);
-        assertThat(it.hasNext(), is(false));
+        assertThat(sA.iterator().hasNext(), is(false));
     }
 }

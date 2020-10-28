@@ -1,43 +1,41 @@
 package ru.job4j.Collections;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
 
     private T[] listModel;
-    private int index;
+    private int size;
+    private int cells;
 
-    public SimpleArray(T[] listModel) {
-        this.listModel = listModel;
-        this.index = 0;
-    }
+    public SimpleArray(int cells) {
+        this.size = 0;
+        this.cells = cells;
+        this.listModel = (T[]) new Object[cells];
+            }
 
     public T add(T model) {
-        while (iterator().hasNext()) {
-             if (listModel[index] == null) {
-                listModel[index] = model;
-                break;
-            }
-             index++;
+        if(size >= listModel.length) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            listModel[size] = model;
+            size++;
         }
-        index = 0;
         return model;
     }
 
     public T set(int index, T model) {
-        Objects.checkIndex(index, listModel.length);
+        Objects.checkIndex(index, size);
        listModel[index] = model;
         return (T) listModel;
     }
 
     public void remove(int index) {
-        Objects.checkIndex(index, listModel.length);
-        final int newSize;
-        if ((newSize = listModel.length - 1) > index)
-            System.arraycopy(listModel, index + 1, listModel, index, newSize - index);
-        listModel[newSize] = null;
-
+        Objects.checkIndex(index, size);
+        T[] newSize = (T[]) new Object[listModel.length-1];
+            System.arraycopy(listModel, index + 1, newSize, index, newSize.length);
     }
 
     public T get(int index) {
@@ -47,7 +45,23 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new SimpleArrayIterator<>(listModel);
+        return new Iterator<T>() {
+
+            int cursor = 0;
+
+            @Override
+            public boolean hasNext() {
+                return cursor < size;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return listModel[cursor++];
+            }
+        };
     }
 }
 
