@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 public class SimpleArrayTest {
 
     private SimpleArray<Integer> sA;
-    private Integer[] listModel;
+
 
     @Before
     public void setUp() {
@@ -59,6 +59,19 @@ public class SimpleArrayTest {
         sA.add(3);
         sA.remove(2);
         sA.get(2);
+    }
+
+    @Test
+    public void whenDeleteModelMoveToLeft() {
+        sA = new SimpleArray<>(5);
+        sA.add(1);
+        sA.add(2);
+        sA.add(3);
+        sA.add(1);
+        sA.add(2);
+       sA.remove(1);
+       assertThat(sA.get(1), is (3));
+
     }
 
     @Test

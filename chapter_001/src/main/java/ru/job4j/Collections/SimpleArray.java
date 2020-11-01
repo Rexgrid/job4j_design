@@ -34,18 +34,18 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void remove(int index) {
         Objects.checkIndex(index, size);
-        T[] newSize = (T[]) new Object[listModel.length-1];
-            System.arraycopy(listModel, index + 1, newSize, index, newSize.length);
+        System.arraycopy(listModel, index + 1, listModel, index,(listModel.length - 1) - index);
+        size--;
     }
 
     public T get(int index) {
-        Objects.checkIndex(index, listModel.length);
+        Objects.checkIndex(index, size);
         return listModel[index];
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
 
             int cursor = 0;
 
