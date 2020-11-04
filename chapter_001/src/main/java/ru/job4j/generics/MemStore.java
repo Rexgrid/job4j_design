@@ -43,12 +43,10 @@ public final class MemStore<T extends Base> implements Store<T> {
     }
 
     public int indexOf(String id) {
-        int result = 0;
+        int result = -1;
         for (int i = 0; i < mem.size(); i++) {
             if (mem.get(i).getId().equals(id)) {
                 result = i;
-            } else {
-                result = -1;
             }
         }
         return result;
