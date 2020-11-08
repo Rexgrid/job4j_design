@@ -4,9 +4,9 @@ import java.util.*;
 
 public class SimplyArray<T> implements Iterable<T> {
 
-    Object [] array;
-    int modCount;
-    int size;
+    private Object [] array;
+    private int modCount;
+    private int size;
 
     public SimplyArray() {
         this.array = new Object[10];
@@ -23,12 +23,16 @@ public class SimplyArray<T> implements Iterable<T> {
     public void add(T model) {
         modCount++;
         if (size == array.length) {
-            int newSize = array.length * 2;
-            array = Arrays.copyOf(array, newSize);
+           grow();
         }
             array[size] = model;
             size++;
         }
+
+     public Object[] grow() {
+         int newSize = array.length * 2;
+         return array = Arrays.copyOf(array, newSize);
+     }
 
     @Override
     public Iterator<T> iterator() {
