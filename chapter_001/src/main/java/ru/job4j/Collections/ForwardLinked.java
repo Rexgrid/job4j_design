@@ -52,7 +52,7 @@ public class ForwardLinked<T> implements Iterable<T> {
         Node<T> prev = null;
         Node<T> current = head;
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            return;
         }
        while (current != null) {
            Node<T> next = current.next;
