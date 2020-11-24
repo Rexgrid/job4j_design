@@ -36,15 +36,15 @@ public class ListUtilsTest {
     @Test
     public void whenPredicateTrueThenRemove() {
         List<Integer> input = new ArrayList<>(Arrays.asList(1, 4, 6, 8));
-        ListUtils.removeIf(input, x -> x % 2 != 0);
-        assertThat(Arrays.asList(4, 6, 8), Is.is(input));
+        ListUtils.removeIf(input, x -> x % 2 == 0);
+        assertThat(Arrays.asList(1), Is.is(input));
     }
 
     @Test
     public void whenPredicateTrueThenReplace() {
         List<Integer> input = new ArrayList<>(Arrays.asList(1, 4, 6, 8));
-        ListUtils.replaceIf(input, x -> x % 2 != 0, 2);
-        assertThat(Arrays.asList(2, 4, 6, 8), Is.is(input));
+        ListUtils.replaceIf(input, x -> x % 2 == 0, 2);
+        assertThat(Arrays.asList(1, 2, 2, 2), Is.is(input));
     }
 
     @Test
