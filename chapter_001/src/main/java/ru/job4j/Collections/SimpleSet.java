@@ -14,23 +14,23 @@ public class SimpleSet<T> implements Iterable<T> {
     }
 
     public void add(T e) {
-        if (size == 0) {
+        if (size == 0 || !contain(e)) {
             simArr.add(e);
             size++;
         }
+    }
+
+    public boolean contain(T e) {
         for (int i = 0; i < size; i++) {
-            if (simArr.get(i) == e) {
-                return;
-            } else {
-                simArr.add(e);
-                size++;
+            if (simArr.get(i).equals(e)) {
+                return true;
             }
         }
-
+        return false;
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return simArr.iterator();
+        @Override
+        public Iterator<T> iterator () {
+            return simArr.iterator();
+        }
     }
-}
