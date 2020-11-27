@@ -2,6 +2,7 @@ package ru.job4j.Collections;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class SimpleSet<T> implements Iterable<T> {
 
@@ -22,7 +23,7 @@ public class SimpleSet<T> implements Iterable<T> {
 
     public boolean contain(T e) {
         for (int i = 0; i < size; i++) {
-            if (simArr.get(i).equals(e)) {
+            if (Objects.equals(simArr.get(i),e)) {
                 return true;
             }
         }
