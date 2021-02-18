@@ -4,16 +4,18 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Maps<K, V > implements Iterable{
+public class Maps<K, V> implements Iterable<K> {
 
     private Data<K, V>[] dataTable;
     private int count = 0;
     private int capacity = 16;
     private int size = 0;
-    private double loadFactor = capacity * 0.6;
+    private double threshold;
+    private final double LOAD_FACTOR = 0.6;
 
     public Maps() {
         dataTable = new Data[capacity];
+        threshold = capacity * LOAD_FACTOR;
     }
 
     public int indexOf(int h, int capacity) {
@@ -25,12 +27,17 @@ public class Maps<K, V > implements Iterable{
         return h ^ (h >>> 7) ^ (h >>> 4);
     }
 
-    public int getCapacity(){
+    public int getCapacity() {
         return capacity;
     }
 
     public V get(K key) {
-        return getElem(key).getValue();
+        V result = null;
+        Data<K, V> elem = getElem(key);
+        if (elem.getKey().equals(key)) {
+            result = elem.getValue();
+        }
+        return result;
     }
 
     void addEntry(int hash, K key, V value, int index) {
@@ -43,9 +50,10 @@ public class Maps<K, V > implements Iterable{
 
     boolean delete(K key) {
         boolean result = false;
+        int ind = indexOf(hash(key.hashCode()), dataTable.length);
         if (getElem(key) != null) {
-            if (dataTable[indexOf(hash(key.hashCode()), dataTable.length)].getKey().equals(key)) {
-                dataTable[indexOf(hash(key.hashCode()), dataTable.length)] = null;
+            if (dataTable[ind].getKey().equals(key)) {
+                dataTable[ind] = null;
                 size--;
                 count++;
                 result = true;
@@ -55,8 +63,9 @@ public class Maps<K, V > implements Iterable{
     }
 
     void resizeTable() {
-        Data<K,V>[] temp = dataTable;
+        Data<K, V>[] temp = dataTable;
         dataTable = new Data[capacity];
+        threshold = capacity * LOAD_FACTOR;
         for (int i = 0; i < temp.length; i++) {
             if (temp[i] != null) {
                 int h = hash((temp[i].getKey()).hashCode());
@@ -69,17 +78,16 @@ public class Maps<K, V > implements Iterable{
     }
 
     boolean insert(K key, V value) {
-       boolean rsl = false;
+        boolean rsl = false;
         if (getElem(key) == null) {
             int h = hash(key.hashCode());
             int i = indexOf(h, dataTable.length);
-            if (size < loadFactor) {
+            if (size < threshold) {
                 addEntry(h, key, value, i);
                 size++;
-            } else if (capacity > loadFactor) {
-                capacity = capacity*2;
+            } else if (capacity > threshold) {
+                capacity = capacity * 2;
                 resizeTable();
-                size = 0;
             }
             count++;
             rsl = true;
@@ -93,16 +101,22 @@ public class Maps<K, V > implements Iterable{
         return new Iterator() {
             private int cursor = 0;
             private final int modCount = count;
+
             @Override
             public boolean hasNext() {
                 boolean rsl = false;
-               if (cursor < capacity) rsl = true;
-               return rsl;
+                while (cursor < capacity) {
+                    if (dataTable[cursor] == null) {
+                        cursor++;
+                    }
+                    rsl = true;
+                }
+                return rsl;
             }
 
             @Override
             public Object next() {
-                if (!hasNext()){
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 if (modCount < count) {
