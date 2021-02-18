@@ -2,7 +2,7 @@ package ru.job4j.Collections;
 
 import java.util.*;
 
-public class SimplyArray<T> implements Iterable<T> {
+public class  SimplyArray<T> implements Iterable<T> {
 
     private Object [] array;
     private int modCount;
