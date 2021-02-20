@@ -34,7 +34,7 @@ public class Maps<K, V> implements Iterable<K> {
     public V get(K key) {
         V result = null;
         Data<K, V> elem = getElem(key);
-        if (elem.getKey().equals(key)) {
+        if (elem != null && elem.getKey().equals(key)) {
             result = elem.getValue();
         }
         return result;
@@ -97,7 +97,7 @@ public class Maps<K, V> implements Iterable<K> {
 
 
     @Override
-    public Iterator iterator() {
+    public Iterator<K> iterator() {
         return new Iterator() {
             private int cursor = 0;
             private final int modCount = count;
