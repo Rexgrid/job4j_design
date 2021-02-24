@@ -11,7 +11,7 @@ public class Maps<K, V> implements Iterable<K> {
     private int capacity = 16;
     private int size = 0;
     private double threshold;
-    private final double LOAD_FACTOR = 0.6;
+    private static final double LOAD_FACTOR = 0.6;
 
     public Maps() {
         dataTable = new Data[capacity];
@@ -51,7 +51,7 @@ public class Maps<K, V> implements Iterable<K> {
     boolean delete(K key) {
         boolean result = false;
         int ind = indexOf(hash(key.hashCode()), dataTable.length);
-        if (getElem(key) != null) {
+        if (dataTable[ind] != null) {
             if (dataTable[ind].getKey().equals(key)) {
                 dataTable[ind] = null;
                 size--;
@@ -71,8 +71,6 @@ public class Maps<K, V> implements Iterable<K> {
                 int h = hash((temp[i].getKey()).hashCode());
                 int ind = indexOf(h, capacity);
                 dataTable[ind] = temp[i];
-            } else {
-                i++;
             }
         }
     }
@@ -84,11 +82,12 @@ public class Maps<K, V> implements Iterable<K> {
             int i = indexOf(h, dataTable.length);
             if (size < threshold) {
                 addEntry(h, key, value, i);
-                size++;
             } else if (capacity > threshold) {
                 capacity = capacity * 2;
                 resizeTable();
+                addEntry(h, key, value, i);
             }
+            size++;
             count++;
             rsl = true;
         }
