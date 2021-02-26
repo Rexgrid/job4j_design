@@ -103,14 +103,10 @@ public class Maps<K, V> implements Iterable<K> {
 
             @Override
             public boolean hasNext() {
-                boolean rsl = false;
-                while (cursor < capacity) {
                     if (dataTable[cursor] == null) {
                         cursor++;
                     }
-                    rsl = true;
-                }
-                return rsl;
+                return cursor < capacity;
             }
 
             @Override
