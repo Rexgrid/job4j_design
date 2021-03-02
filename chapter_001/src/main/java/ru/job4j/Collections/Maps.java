@@ -99,25 +99,29 @@ public class Maps<K, V> implements Iterable<K> {
     public Iterator<K> iterator() {
         return new Iterator() {
             private int cursor = 0;
-            private final int modCount = count;
+            private int modCount = count;
 
             @Override
             public boolean hasNext() {
+                int innerCounter = 0;
+                while (cursor < capacity && innerCounter < capacity) {
                     if (dataTable[cursor] == null) {
                         cursor++;
                     }
+                    innerCounter++;
+                }
                 return cursor < capacity;
             }
 
             @Override
-            public Object next() {
+            public K next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 if (modCount < count) {
                     throw new ConcurrentModificationException();
                 }
-                return dataTable[cursor++];
+                return dataTable[cursor++].getKey();
             }
         };
     }
