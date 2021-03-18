@@ -1,4 +1,4 @@
-package ru.job4j.Collections;
+/*package ru.job4j.Collections;
 
 import static org.hamcrest.CoreMatchers.is;
         import static org.junit.Assert.assertEquals;
@@ -26,3 +26,7 @@ public class SimpleMapTest {
     }
 
 }
+
+ */
+
+

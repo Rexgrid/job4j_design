@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleMap<K,V> implements Iterable {
-   private Object[] hashArray;
+   private final Object[] hashArray;
     private K key;
     private V value;
     private int count = 0;
