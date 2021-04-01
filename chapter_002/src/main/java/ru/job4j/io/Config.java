@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 public class Config {
     private final String path;
 
-    public int getValuesSize() {
+    public int getSize() {
         return values.size();
     }
 
@@ -52,6 +52,6 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("app.properties.txt"));
+        System.out.println(new Config("app.properties"));
     }
 }

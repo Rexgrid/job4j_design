@@ -9,7 +9,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment() {
-        String path = ".\\pair_without_comment.properties.txt";
+        String path = "./pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
         assertThat(config.value("name"), is("Petr Arsentev"));
@@ -17,7 +17,7 @@ public class ConfigTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void whenWeHaveOnlyName() {
-        String path = ".\\only_name.properties.txt";
+        String path = "./only_name.properties";
         Config config = new Config(path);
         config.load();
         System.out.println(config.value("name"));
@@ -26,9 +26,9 @@ public class ConfigTest {
 
     @Test
     public void whenWeHaveOnlyComments() {
-        String path = ".\\only_comments.properties.txt";
+        String path = "./only_comments.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.getValuesSize(), is(0));
+        assertThat(config.getSize(), is(0));
     }
 }
