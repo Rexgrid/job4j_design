@@ -28,12 +28,12 @@ public class Analizy {
 
     }
 
-    public void writeInTarget(List<String> log, String target) {
+    public void writeInTarget(String target) {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(target)
                 ))) {
-            for (String i : log) {
+            for (String i : rsl) {
                 out.printf("%s;", i);
             }
         } catch (Exception a) {
@@ -44,6 +44,6 @@ public class Analizy {
         public static void main(String[] args) {
             Analizy al = new Analizy();
             al.unavailable("unavailable.csv");
-            al.writeInTarget(rsl, "test.csv");
+            al.writeInTarget("test.csv");
         }
     }
