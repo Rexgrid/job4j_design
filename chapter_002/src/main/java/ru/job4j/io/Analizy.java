@@ -2,23 +2,27 @@ package ru.job4j.io;
 
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Analizy {
     private static List<String> rsl = new ArrayList<>();
+    private static String begining;
 
     public void unavailable(String source) {
         boolean serverStatus = true;
+
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             while (in.read() != -1) {
                 String line = in.readLine();
                 String[] lines = line.split(" ");
-                if (serverStatus && lines[0].equals("400") || lines[0].equals("500")) {
-                    rsl.add(lines[1]);
+                if (serverStatus && (lines[0].equals("400") || lines[0].equals("500"))) {
+                    begining = lines[1];
                     serverStatus = false;
-                } else if (!serverStatus && lines[0].equals("200") || lines[0].equals("300")) {
-                    rsl.add(lines[1]);
+                } else if (!serverStatus && (lines[0].equals("200") || lines[0].equals("300"))) {
+                    begining += ";" + lines[1];
+                    rsl.add(begining);
                     serverStatus = true;
                 }
             }
@@ -28,22 +32,21 @@ public class Analizy {
 
     }
 
-    public void writeInTarget(String target) {
+    public void writeInTarget(String target) throws FileNotFoundException {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(target)
                 ))) {
-            for (String i : rsl) {
-                out.printf("%s;", i);
+            for (String line: rsl) {
+                out.println(line);
             }
-        } catch (Exception a) {
-            a.printStackTrace();
         }
     }
 
-        public static void main(String[] args) {
-            Analizy al = new Analizy();
-            al.unavailable("unavailable.csv");
-            al.writeInTarget("test.csv");
-        }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Analizy al = new Analizy();
+        al.unavailable("unavailable.csv");
+        al.writeInTarget("test.csv");
     }
+}
