@@ -4,6 +4,7 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 
 public class Analizy {
@@ -12,10 +13,9 @@ public class Analizy {
 
     public void unavailable(String source) {
         boolean serverStatus = true;
-
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-            while (in.read() != -1) {
-                String line = in.readLine();
+            String line;
+            while ((line = in.readLine()) != null) {
                 String[] lines = line.split(" ");
                 if (serverStatus && (lines[0].equals("400") || lines[0].equals("500"))) {
                     begining = lines[1];
