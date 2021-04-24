@@ -13,7 +13,7 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class SearchFiles implements FileVisitor<Path> {
     private Predicate<Path> condition;
-    private ArrayList<Path> list = new ArrayList<>();
+    private List<Path> list = new ArrayList<>();
 
     public SearchFiles(Predicate<Path> condition) {
         this.condition = condition;
@@ -44,10 +44,6 @@ public class SearchFiles implements FileVisitor<Path> {
     }
 
     public List<Path> getPath() {
-       List<Path> result = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            result.add(list.get(i).toAbsolutePath());
-        }
-        return  result;
+        return list;
     }
 }
