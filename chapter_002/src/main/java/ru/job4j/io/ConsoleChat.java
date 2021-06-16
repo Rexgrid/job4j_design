@@ -15,7 +15,6 @@ public class ConsoleChat {
     private static final String CONTINUE = "продолжить";
     private boolean botStatus = true;
     private boolean botIsOnline = true;
-    private String tempAnswers = "";
 
 
     public ConsoleChat(String path, String botAnswers) {
@@ -28,7 +27,7 @@ public class ConsoleChat {
             Scanner in = new Scanner(System.in);
            while (botStatus) {
                String askFromUser = in.nextLine();
-               tempAnswers = botLogic();
+               String tempAnswers = botLogic();
                switch (askFromUser) {
                    case (STOP):
                        writeToLog.println(askFromUser);
@@ -59,8 +58,7 @@ public class ConsoleChat {
 
     public String botLogic() throws IOException {
        List<String> rsl = Files.readAllLines(Paths.get(botAnswers));
-       String result = rsl.get(ThreadLocalRandom.current().nextInt(0, rsl.size()-1));
-       return result;
+      return rsl.get(ThreadLocalRandom.current().nextInt(0, rsl.size()-1));
     }
 
     public static void main(String[] args) {
