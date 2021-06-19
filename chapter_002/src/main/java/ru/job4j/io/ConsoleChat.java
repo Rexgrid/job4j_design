@@ -3,6 +3,7 @@ package ru.job4j.io;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,6 +16,7 @@ public class ConsoleChat {
     private static final String CONTINUE = "продолжить";
     private boolean botStatus = true;
     private boolean botIsOnline = true;
+    private List<String> answer = new ArrayList<>();
 
 
     public ConsoleChat(String path, String botAnswers) {
@@ -25,30 +27,34 @@ public class ConsoleChat {
     public void run() {
         try (PrintWriter writeToLog = new PrintWriter(path)) {
             Scanner in = new Scanner(System.in);
+            List<String> rsl = Files.readAllLines(Paths.get(botAnswers));
            while (botStatus) {
                String askFromUser = in.nextLine();
-               String tempAnswers = botLogic();
+               String tempAnswers = botLogic(rsl);
                switch (askFromUser) {
                    case (STOP):
-                       writeToLog.println(askFromUser);
+                       answer.add(askFromUser);
                        System.out.println("Я, пожалуй, отойду ...");
                        botIsOnline = false;
                        break;
                    case (CONTINUE):
-                       writeToLog.println(askFromUser);
+                       answer.add(askFromUser);
                        System.out.println("Я снова тут.");
                        botIsOnline = true;
                        break;
                    case (OUT):
-                       writeToLog.println(askFromUser);
+                       answer.add(askFromUser);
                        botStatus = false;
                        break;
                    default:
                        if (botIsOnline) {
-                           writeToLog.println(askFromUser + " " + tempAnswers);
+                           answer.add(askFromUser + " " + tempAnswers);
                            System.out.println(tempAnswers);
                        }
                }
+           }
+           for (String s : answer) {
+               writeToLog.println(s);
            }
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,9 +62,8 @@ public class ConsoleChat {
            }
 
 
-    public String botLogic() throws IOException {
-       List<String> rsl = Files.readAllLines(Paths.get(botAnswers));
-      return rsl.get(ThreadLocalRandom.current().nextInt(0, rsl.size()-1));
+    public String botLogic(List<String> botAnswer) {
+      return botAnswer.get(ThreadLocalRandom.current().nextInt(0, botAnswer.size()));
     }
 
     public static void main(String[] args) {
