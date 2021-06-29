@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<car isCoupe="false" hoursePower="300">
+    <wheelDrive typeWheelDrive="Front Wheel Drive" />
+            <parameters>
+                <parametr>4 seats</parametr>
+                <parametr>Purple</parametr>
+            </parameters>
+</car>
