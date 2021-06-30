@@ -1,7 +1,12 @@
 package ru.job4j.io.serialization;
 
 import com.google.gson.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Hero {
 
@@ -44,25 +49,27 @@ public class Hero {
     }
 
     public static void main(String[] args) {
+
+
+        JSONObject spell = new JSONObject("{\"spell\":\"Firestorm\"}");
+
+        List<String> weapons = new ArrayList<>();
+        weapons.add("One-Handed Sword");
+        weapons.add("Wand");
+        JSONArray jsonArray = new JSONArray(weapons);
+
         final Hero alfredVanBidden = new Hero(true, 35,
                 new SpellBook("Firestorm"), "One-Handed Sword", "Wand");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("isHuman", alfredVanBidden.isHuman);
+        jsonObject.put("valueOfGold", alfredVanBidden.getValueOfGold());
+        jsonObject.put("spell", spell );
+        jsonObject.put("weapon",jsonArray);
 
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(alfredVanBidden));
+        System.out.println(jsonObject.toString());
 
-        final String personJson =
-                "{"
-                        +"\"isHuman\":true,"
-                        +"\"value of gold\" : 35,"
-                        +"\"spell\":"
-                        +"{"
-                        + "\"spell\":Firestorm"
-                        +"},"
-                        +"\"weapon\":"
-                        +"[\"One-Handed Sword\", \"Wand\"]"
-                        +"}";
-        final  Hero fromJson = gson.fromJson(personJson, Hero.class);
-        System.out.println(fromJson);
+        System.out.println(new JSONObject(alfredVanBidden));
+
     }
 }
 
