@@ -54,7 +54,7 @@ public class Hero {
                 "{"
                         +"\"isHuman\":true,"
                         +"\"value of gold\" : 35,"
-                        +"\"Spell book\":"
+                        +"\"spell\":"
                         +"{"
                         + "\"spell\":Firestorm"
                         +"},"
