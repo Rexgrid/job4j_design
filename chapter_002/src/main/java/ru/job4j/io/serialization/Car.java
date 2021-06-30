@@ -3,7 +3,9 @@ package ru.job4j.io.serialization;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 
@@ -11,13 +13,14 @@ import java.util.Arrays;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
     @XmlAttribute
-    private  boolean isCoupe;
+    private boolean isCoupe;
     @XmlAttribute
-    private  int horsePower;
-    private  WheelDrive typeOfWheelDrive;
+    private int horsePower;
+    private WheelDrive typeOfWheelDrive;
     private String[] parameters;
 
-    public Car(){ }
+    public Car() {
+    }
 
     public Car(boolean isCoupe, int horsePower, WheelDrive typeOfWheelDrive, String... parameters) {
         this.isCoupe = isCoupe;
@@ -42,13 +45,20 @@ public class Car {
         JAXBContext context = JAXBContext.newInstance(Car.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String result = "";
 
         try (StringWriter sw = new StringWriter()) {
             marshaller.marshal(car, sw);
-            String result = sw.getBuffer().toString();
+            result = sw.getBuffer().toString();
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader sr = new StringReader(result)) {
+            Car desCar = (Car) unmarshaller.unmarshal(sr);
+            System.out.println(desCar);
         }
     }
 }
