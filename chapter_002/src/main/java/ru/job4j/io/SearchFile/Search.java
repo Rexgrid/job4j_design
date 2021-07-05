@@ -1,7 +1,6 @@
-package ru.job4j.io;
+package ru.job4j.io.SearchFile;
 
 import java.io.IOException;
-import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

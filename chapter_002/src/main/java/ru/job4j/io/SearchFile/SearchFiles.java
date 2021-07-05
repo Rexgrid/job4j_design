@@ -1,4 +1,4 @@
-package ru.job4j.io;
+package ru.job4j.io.SearchFile;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -21,25 +21,25 @@ public class SearchFiles implements FileVisitor<Path> {
 
 
     @Override
-    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
         return CONTINUE;
     }
 
     @Override
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        if(condition.test(file)){
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+        if (condition.test(file)) {
             list.add(file);
         }
         return CONTINUE;
     }
 
     @Override
-    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+    public FileVisitResult visitFileFailed(Path file, IOException exc) {
         return CONTINUE;
     }
 
     @Override
-    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
         return CONTINUE;
     }
 
