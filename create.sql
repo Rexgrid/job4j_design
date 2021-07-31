@@ -1,1 +1,6 @@
-insert into cars (model, numberofseats, horsepower) values ('Civic', 5, 180);
+create table cars(
+id serial primary key,
+	model varchar(255),
+	numberOfSeats int,
+	horsePower int	 
+);
