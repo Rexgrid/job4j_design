@@ -1,0 +1,1 @@
+insert into cars (model, numberofseats, horsepower) values ('Civic', 5, 180);
