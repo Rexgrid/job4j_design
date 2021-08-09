@@ -1,0 +1,2 @@
+insert into devices(name, price) values ('keyboard', 3000.00), ('Monitor', 4500.00), ('Mouse', 2090.00);
+insert into devices_people(device_id, people_id) values (4, 1), (4,2), (4,3), (5,1), (5,2), (6,3);
