@@ -1,18 +1,30 @@
-create table driver (
+create table departments (
 id serial primary key,
-name varchar(40),
-birthday timestamp);
-
-create table driver_license(
-id serial primary key,
-	seria varchar(10),
-	experetion_date timestamp,
-	driver_id int references driver(id)
+	name varchar(120)
 );
 
-insert into driver(name) values ('Tyrion Lanister', date '1955-04-12');
-insert into driver_license (seria, experetion_date, driver_id) values ('123 457', date '2022-12-02', 1);
+create table employees (
+id serial primary key,
+	name varchar(70),
+	dep_id int references departments(id)
+);
 
-select dl.seria, driver.name from driver_license as dl join driver on dl.driver_id = driver.id;
-select dl.experetion_date, driver.name  from driver_license as dl inner join driver on dl.driver_id = driver.id;
-select driver.name, driver.birthday as bday , dl.experetion_date from driver_license as dl join driver on dl.driver_id = driver.id;
+insert into departments(name) values ('Sales'), ('Administration'), ('Law department');
+insert into employees(name, dep_id) values ('Alex', 1), ('Josh', 1), ('Colin', '1'), ('Carl', 2), ('Elena', 2);
+
+select * from employees e left join departments d on e.dep_id = d.id;
+select * from employees e right join departments d on e.dep_id = d.id;
+select * from employees e full join departments d on e.dep_id = d.id;
+select * from employees e cross join departments d;
+select d.name from departments d left join employees e on e.dep_id = d.id where e.name is null;
+select * from employees e right join departments d on e.dep_id = d.id;
+select * from departments d left join employees e on e.dep_id = d.id;
+
+create table teens (
+name varchar(255),
+gender varchar(1)
+);
+
+insert into teens values ('Alex', 'm'), ('Elena', 'f'), ('Mark', 'm'), ('Irina', 'f');
+
+select t1.gender as p1, t2.gender as p2 from teens t1 cross join teens t2;
