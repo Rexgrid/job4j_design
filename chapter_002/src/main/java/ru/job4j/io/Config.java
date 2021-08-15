@@ -20,9 +20,9 @@ public class Config {
     }
 
     public void load() {
+        String line;
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            while (read.read() != -1) {
-                String line = read.readLine();
+            while ((line = read.readLine()) != null) {
                 String[] lines = line.split("=");
                 if (!lines[0].startsWith("#") && lines.length > 1) {
                     values.put(lines[0], lines[1]);
