@@ -27,4 +27,4 @@ gender varchar(1)
 
 insert into teens values ('Alex', 'm'), ('Elena', 'f'), ('Mark', 'm'), ('Irina', 'f');
 
-select t1.gender as p1, t2.gender as p2 from teens t1 cross join teens t2;
+select t1.gender as p1, t2.gender as p2 from teens t1 cross join teens t2 where t1.gender != t2.gender;
