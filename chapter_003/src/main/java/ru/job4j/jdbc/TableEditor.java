@@ -36,11 +36,10 @@ public class TableEditor implements AutoCloseable {
 
     public void createTable(String tableName) throws Exception {
           Statement statement = createStatement();
-            String sql = String.format("create table if not exist %s(%s, %s);",
+            String sql = String.format("create table if not exist %s(%s);",
                     tableName,
-                    "id serial primary key",
-                    "name varchar(255)");
-            statement.execute(sql);
+                    "id serial primary key");
+                 statement.execute(sql);
     }
 
     public void dropTable(String tableName) throws Exception {
@@ -53,7 +52,7 @@ public class TableEditor implements AutoCloseable {
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
         Statement statement = createStatement();
-            String sql = String.format("alter table %s add %s %s;",
+            String sql = String.format("alter table %s add column %s %s;",
                     tableName,
                     columnName,
                     type);
@@ -70,7 +69,7 @@ public class TableEditor implements AutoCloseable {
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
         Statement statement = createStatement();
-            String sql = String.format("alter table %s rename %s to %s",
+            String sql = String.format("alter table %s rename column %s to %s",
                     tableName,
                     columnName,
                     newColumnName);
